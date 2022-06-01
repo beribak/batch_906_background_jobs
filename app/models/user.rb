@@ -3,4 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # after_commit :send_email
+
+  private
+
+  def send_email
+    FakeJob.perform_later(self)
+  end
 end
